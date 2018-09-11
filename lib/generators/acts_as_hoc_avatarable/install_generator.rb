@@ -9,9 +9,9 @@ module ActsAsHocAvatarable
         template "initializer.rb", "config/initializers/acts_as_hoc_avatarable.rb"
       end
 
-      # def install_active_storage
-      #   rails_command 'activestorage::install'
-      # end
+      def install_active_storage
+        rails_command 'activestorage::install'
+      end
 
       def self.next_migration_number(dirname)
         if ActiveRecord::Base.timestamped_migrations
