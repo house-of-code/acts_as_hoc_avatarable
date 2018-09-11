@@ -1,6 +1,8 @@
 # ActsAsHocAvatarable
 
-  Ease the use of active storage as avatar
+  Ease the use of ActiveStorage as an avatar for eg. user model.
+  This is specially made for API usage, where data is delivered as a base64 string.
+  Images can be resized on saving.
   This uses ActiveStorage, thus minimum rails version is 5.2
 
 ## Installation

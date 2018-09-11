@@ -15,28 +15,28 @@ module ActsAsHocAvatarable
   end
 
   def avatar_url
-    return Rails.application.routes.url_helpers.rails_blob_url(avatar, host: (ActsAsHocAvatarable.configuration.default_host ||= "localhost:3000")) if avatar.attached?
-    return "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email)}" if (ActsAsHocAvatarable.configuration.fallback_to_gravatar ||= true)
+    return Rails.application.routes.url_helpers.rails_blob_url(avatar, host: ActsAsHocAvatarable.configuration.default_host) if avatar.attached?
+    return "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email)}" if ActsAsHocAvatarable.configuration.fallback_to_gravatar
     return nil
   end
 
   def clear_avatar
     if remove_avatar == '1'
-      avatar_contents = nil
+      @avatar_contents = nil
       avatar.purge_later
     end
   end
 
   def parse_avatar
     # If directly uploaded
-    unless avatar_contents.nil? || avatar_contents[/(image\/[a-z]{3,4})|(application\/[a-z]{3,4})/] == ''
-      content_type = avatar_contents[/(image\/[a-z]{3,4})|(application\/[a-z]{3,4})/]
+    unless avatar_contents.nil? || avatar_contents[/(image\/[a-z]{3,4})/] == ''
+      content_type = avatar_contents[/(image\/[a-z]{3,4})/]
       content_type = content_type[/\b(?!.*\/).*/]
-      contents = avatar_contents.sub /data:((image|application)\/.{3,}),/, ''
+      contents = avatar_contents.sub /data:((image)\/.{3,}),/, ''
       decoded_data = Base64.decode64(contents)
       mini_magick = MiniMagick::Image.read(decoded_data)
-      if (ActsAsHocAvatarable.configuration.resize_on_create ||= true)
-        mini_magick.resize (ActsAsHocAvatarable.configuration.resize_size ||= "100x100>")
+      if ActsAsHocAvatarable.configuration.resize_on_create
+        mini_magick.resize (ActsAsHocAvatarable.configuration.resize_size)
       end
       decoded_data = mini_magick.to_blob
       filename = avatar_name || "avatar_#{Time.zone.now.to_i}.#{content_type}"
