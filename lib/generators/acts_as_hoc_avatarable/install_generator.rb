@@ -9,7 +9,7 @@ module ActsAsHocAvatarable
       end
 
       def install_active_storage
-        rails_command 'activestorage:install'
+        rails_command 'active_storage:install'
       end
     end
   end
