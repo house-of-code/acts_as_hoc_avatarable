@@ -8,9 +8,9 @@ module ActsAsHocAvatarable
         template "initializer.rb", "config/initializers/acts_as_hoc_avatarable.rb"
       end
 
-      # def install_active_storage
-      #   rake 'active_storage::install'
-      # end
+      def install_active_storage
+        rake 'active_storage::install'
+      end
     end
   end
 end

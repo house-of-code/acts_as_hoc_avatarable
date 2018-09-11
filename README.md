@@ -25,10 +25,6 @@ install it with:
 
     $ rails generate acts_as_hoc_avatarable:install
 
-You also need ActiveStorage so run the following
-
-    $ rails activestorage:install
-
 And finally migrate with:
 
     $ rails db:migrate
