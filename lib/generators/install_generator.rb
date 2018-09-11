@@ -1,5 +1,5 @@
 module ActsAsHocAvatarable
-  module Generators
+  #module Generators
     class InstallGenerator < Rails::Generators::Base
       source_root File.expand_path('../templates', __FILE__)
 
@@ -11,5 +11,5 @@ module ActsAsHocAvatarable
         rails_command 'activestorage::install'
       end
     end
-  end
+  #end
 end
