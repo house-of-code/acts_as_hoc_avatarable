@@ -10,7 +10,7 @@ module ActsAsHocAvatarable
       end
 
       def install_active_storage
-        rails_command 'active_storage::install'
+        rake 'active_storage::install'
       end
 
       def self.next_migration_number(dirname)
