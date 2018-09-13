@@ -5,6 +5,7 @@ module ActsAsHocAvatarable
 
   module ClassMethods
     def acts_as_hoc_avatarable(_options = {})
+      require 'digest/md5'
       has_one_attached :avatar
       attr_accessor :avatar_contents
       attr_accessor :avatar_name
@@ -15,8 +16,11 @@ module ActsAsHocAvatarable
   end
 
   def avatar_url
+    unless persisted?
+      return nil
+    end
     return Rails.application.routes.url_helpers.rails_blob_url(avatar, host: ActsAsHocAvatarable.configuration.default_host) if avatar.attached?
-    return "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email)}" if ActsAsHocAvatarable.configuration.fallback_to_gravatar
+    return "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email ||= '')}" if ActsAsHocAvatarable.configuration.fallback_to_gravatar
     return nil
   end
 
